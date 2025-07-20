@@ -22,4 +22,8 @@ public class ProductServiceImpl implements ProductService {
     public Integer createProduct(ProductRequest productRequest) {
         return productDao.createProduct(productRequest);
     }
+
+    public void updateProduct(int productId, ProductRequest productRequest) {
+        productDao.updateProduct(productId, productRequest);
+    }
 }
