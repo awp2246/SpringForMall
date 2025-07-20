@@ -7,6 +7,8 @@ import com.bob.springformall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class ProductServiceImpl implements ProductService {
 
@@ -17,6 +19,11 @@ public class ProductServiceImpl implements ProductService {
     public Product getProductById(int productId) {
 
         return productDao.getProductById(productId);
+    }
+
+    public List<Product> getProducts() {
+        return productDao.getProducts();
+
     }
 
     public Integer createProduct(ProductRequest productRequest) {
@@ -30,4 +37,5 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(Integer productId) {
         productDao.deleteProductById(productId);
     }
+
 }
