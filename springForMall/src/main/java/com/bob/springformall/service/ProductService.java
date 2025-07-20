@@ -1,5 +1,6 @@
 package com.bob.springformall.service;
 
+import com.bob.springformall.constant.ProductCategory;
 import com.bob.springformall.dto.ProductRequest;
 import com.bob.springformall.model.Product;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,7 +11,7 @@ public interface ProductService {
 
     Product getProductById(int productId);
 
-    List<Product> getProducts();
+    List<Product> getProducts(ProductCategory category, String search);
 
     Integer createProduct(ProductRequest productRequest);
 

@@ -1,5 +1,6 @@
 package com.bob.springformall.service.impl;
 
+import com.bob.springformall.constant.ProductCategory;
 import com.bob.springformall.dao.ProductDao;
 import com.bob.springformall.dto.ProductRequest;
 import com.bob.springformall.model.Product;
@@ -21,8 +22,8 @@ public class ProductServiceImpl implements ProductService {
         return productDao.getProductById(productId);
     }
 
-    public List<Product> getProducts() {
-        return productDao.getProducts();
+    public List<Product> getProducts(ProductCategory category, String search) {
+        return productDao.getProducts(category, search);
 
     }
 

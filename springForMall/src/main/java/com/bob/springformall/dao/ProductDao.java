@@ -1,5 +1,6 @@
 package com.bob.springformall.dao;
 
+import com.bob.springformall.constant.ProductCategory;
 import com.bob.springformall.dto.ProductRequest;
 import com.bob.springformall.model.Product;
 
@@ -9,7 +10,7 @@ public interface ProductDao {
 
     Product getProductById(int productId);
 
-    List<Product> getProducts();
+    List<Product> getProducts(ProductCategory category, String search);
 
     Integer createProduct(ProductRequest productRequest);
 

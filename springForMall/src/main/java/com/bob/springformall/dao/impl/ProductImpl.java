@@ -1,5 +1,6 @@
 package com.bob.springformall.dao.impl;
 
+import com.bob.springformall.constant.ProductCategory;
 import com.bob.springformall.dao.ProductDao;
 import com.bob.springformall.dto.ProductRequest;
 import com.bob.springformall.model.Product;
@@ -48,7 +49,7 @@ public class ProductImpl implements ProductDao {
     }
 
     @Override
-    public List<Product> getProducts() {
+    public List<Product> getProducts(ProductCategory category, String search) {
         String sql = "select product_id,\n" +
                 "    product_name,\n" +
                 "    category,     \n" +
@@ -58,9 +59,21 @@ public class ProductImpl implements ProductDao {
                 "    description,       \n" +
                 "    created_date,      \n" +
                 "    last_modified_date\n" +
-                "    from product\n";
+                "    from product\n" +
+                "    where 1=1";
 
         Map<String, Object> map = new HashMap<>();
+
+        if(category != null){
+            sql = sql + " AND category = :category";
+            map.put("category", category.name());
+        }
+
+        if(search != null){
+            sql = sql + " AND product_name LIKE :search";
+            map.put("search", "%" + search + "%");
+        }
+
         List<Product> productList = namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
 
         return productList;
