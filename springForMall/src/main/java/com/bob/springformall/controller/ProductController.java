@@ -1,6 +1,7 @@
 package com.bob.springformall.controller;
 
 import com.bob.springformall.constant.ProductCategory;
+import com.bob.springformall.dto.ProductQueryParam;
 import com.bob.springformall.dto.ProductRequest;
 import com.bob.springformall.model.Product;
 import com.bob.springformall.service.ProductService;
@@ -33,7 +34,12 @@ public class ProductController {
 
     @GetMapping("/products")
     public ResponseEntity<List<Product>> getProducts(@RequestParam(required = false) ProductCategory category, @RequestParam(required = false) String search) {
-        List<Product> productList = productService.getProducts(category, search);
+
+        ProductQueryParam param = new ProductQueryParam();
+        param.setCategory(category);
+        param.setSearch(search);
+
+        List<Product> productList = productService.getProducts(param);
 
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }
