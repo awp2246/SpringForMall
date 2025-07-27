@@ -88,6 +88,30 @@ public class ProductImpl implements ProductDao {
         return productList;
     }
 
+
+    @Override
+    public  int countProducts(ProductQueryParam param) {
+
+        String sql = "select count(*) from product WHERE 1=1";
+
+        Map<String, Object> map = new HashMap<>();
+
+        if(param.getCategory() != null){
+            sql = sql + " AND category = :category";
+            map.put("category", param.getCategory().name());
+        }
+
+        if(param.getSearch() != null){
+            sql = sql + " AND product_name LIKE :search";
+            map.put("search", "%" + param.getSearch() + "%");
+        }
+
+        Integer total = namedParameterJdbcTemplate.queryForObject(sql, map, Integer.class);
+        return total;
+    }
+
+
+
     @Override
     public Integer createProduct(ProductRequest productRequest) {
         String sql = "INSERT INTO product(product_name, category, image_url, price, stock, description, created_date, last_modified_date) " +
@@ -113,10 +137,7 @@ public class ProductImpl implements ProductDao {
 
         return productId;
 
-
-
     }
-
 
     @Override
     public void updateProduct(int productId, ProductRequest productRequest) {

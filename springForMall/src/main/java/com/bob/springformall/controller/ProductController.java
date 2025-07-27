@@ -5,6 +5,7 @@ import com.bob.springformall.dto.ProductQueryParam;
 import com.bob.springformall.dto.ProductRequest;
 import com.bob.springformall.model.Product;
 import com.bob.springformall.service.ProductService;
+import com.bob.springformall.util.Page;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -37,7 +38,7 @@ public class ProductController {
 
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts(
+    public ResponseEntity<Page<Product>> getProducts(
             @RequestParam(required = false) ProductCategory category,
             @RequestParam(required = false) String search,
 
@@ -58,9 +59,18 @@ public class ProductController {
         param.setLimit(limit);
         param.setOffset(offset);
 
+        //取得商品資訊
         List<Product> productList = productService.getProducts(param);
+        //取得商品總筆數
+        Integer total = productService.countProducts(param);
 
-        return ResponseEntity.status(HttpStatus.OK).body(productList);
+        Page<Product> page = new Page<>();
+        page.setLimit(limit);
+        page.setOffset(offset);
+        page.setTotal(total);
+        page.setResults(productList);
+
+        return ResponseEntity.status(HttpStatus.OK).body(page);
     }
 
 

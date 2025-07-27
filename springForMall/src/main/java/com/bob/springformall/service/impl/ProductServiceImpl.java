@@ -28,6 +28,10 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
+    public int countProducts(ProductQueryParam param) {
+        return productDao.countProducts(param);
+    }
+
     public Integer createProduct(ProductRequest productRequest) {
         return productDao.createProduct(productRequest);
     }
@@ -39,5 +43,6 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(Integer productId) {
         productDao.deleteProductById(productId);
     }
+
 
 }
