@@ -97,6 +97,7 @@ public class ProductController {
         //若存在才update
         productService.updateProduct(productId, productRequest);
 
+        product = productService.getProductById(productId);
         return ResponseEntity.status(HttpStatus.OK).body(product);
     }
 
