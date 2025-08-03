@@ -3,6 +3,7 @@ package com.bob.springformall.service.impl;
 
 import com.bob.springformall.dao.UserDao;
 import com.bob.springformall.dao.impl.UserdaoImpl;
+import com.bob.springformall.dto.UserLoginRequest;
 import com.bob.springformall.dto.UserRegisterRequest;
 import com.bob.springformall.model.User;
 import com.bob.springformall.service.UserService;
@@ -38,5 +39,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Integer userId) {
         return userDao.getUserById(userId);
+    }
+
+    @Override
+    public User login(UserLoginRequest userLoginRequest) {
+
+        User user = userDao.getUserByEmail(userLoginRequest.getEmail());
+        if (user != null) {
+            if (user.getPassword().equals(userLoginRequest.getPassword())) {
+                return user;
+            } else {
+                log.warn("password {} does not match", userLoginRequest.getPassword());
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            }
+        } else {
+            log.warn("email {} not found", userLoginRequest.getEmail());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 }

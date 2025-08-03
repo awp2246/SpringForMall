@@ -1,6 +1,7 @@
 package com.bob.springformall.service;
 
 
+import com.bob.springformall.dto.UserLoginRequest;
 import com.bob.springformall.dto.UserRegisterRequest;
 import com.bob.springformall.model.User;
 import org.springframework.stereotype.Controller;
@@ -11,4 +12,6 @@ public interface UserService {
    Integer register(UserRegisterRequest userRegisterRequest);
 
    User getUserById(Integer userId);
+
+   User login(UserLoginRequest userLoginRequest );
 }
