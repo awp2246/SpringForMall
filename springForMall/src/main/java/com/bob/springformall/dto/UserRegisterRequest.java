@@ -1,5 +1,6 @@
 package com.bob.springformall.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.stereotype.Component;
 
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Component;
 public class UserRegisterRequest {
 
     @NotBlank
+    @Email
     private String email;
     @NotBlank
     private String password;
