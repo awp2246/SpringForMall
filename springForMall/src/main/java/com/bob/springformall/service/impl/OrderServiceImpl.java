@@ -4,6 +4,7 @@ import com.bob.springformall.dao.OrderDao;
 import com.bob.springformall.dao.ProductDao;
 import com.bob.springformall.dto.BuyItem;
 import com.bob.springformall.dto.CreateOrderRequest;
+import com.bob.springformall.model.Order;
 import com.bob.springformall.model.OrderItem;
 import com.bob.springformall.model.Product;
 import com.bob.springformall.service.OrderService;
@@ -14,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-@Transactional
 @Component
 public class OrderServiceImpl implements OrderService {
 
@@ -24,6 +24,7 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private ProductDao productDao;
 
+    @Transactional
     public Integer createOrder(Integer userId, CreateOrderRequest createOrderRequest) {
 
         int totalAmount = 0;
@@ -46,5 +47,17 @@ public class OrderServiceImpl implements OrderService {
         orderDao.createOrderItem(orderId, orderItemList);
 
         return orderId;
+    }
+
+    @Override
+    public Order getOrderById(Integer orderId) {
+        Order order = orderDao.getOrderById(orderId);
+
+        List<OrderItem> orderItemList = orderDao.getOrderItemById(orderId);
+
+        order.setOrderItemList(orderItemList);
+
+        return order;
+
     }
 }
